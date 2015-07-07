@@ -74,13 +74,36 @@
         "Bread": {"Slice":15,"Loaf":350}
       };
       var calorieDensity = {"Eba":50,"Rice":35,"Bread":75};
+      var calcColor = function (calorie) {
+        if (calorie<4000) {
+          return "hsl(209,75%,50%)";
+        } else if(calorie<10000) {
+          return "hsl(127,75%,50%)";
+        } else {
+          return "hsl(0,75%,50%)";
+        }
+      };
       var calcFunc = function() {
         var f = document.getElementById('food').value;
         var s = document.getElementById('serving').value;
         var a = document.getElementById('ans');
         var cal = gramMap[f][s] * calorieDensity[f];
         if(cal) {
-          a.innerHTML = cal;
+          var t=2000, dt=100, i=1, n = t/dt;
+          a.innerHTML=0;
+          a.style.color=calcColor(0);
+          var v, myVar = setInterval(function(){
+            v = cal*i*dt/t;
+            a.innerHTML=v;
+            a.style.color=calcColor(v);
+            if (i<n) {
+              i++;
+            } else {
+              clearInterval(myVar);
+            }
+          },dt);
+
+
         } else {
           alert("You can't have a "+s+" of "+f);
           a.innerHTML = 0;
