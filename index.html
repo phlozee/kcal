@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>Food</title>
+  <style media="screen">
+    body {
+      font-family: 'Segoe UI', 'Trebuchet MS', Verdana, sans-serif;
+    }
+    legend {
+      color: purple;
+      font-size: 1.25em;
+      margin-bottom: .5em;
+      display: block;
+    }
+    .control {
+      width: 100%;
+      font-size: 1.5em;
+      line-height: 2.5em;
+      color: lime;
+      border: 1px solid purple;
+      padding: 10px;
+    }
+    #ans {
+      font-size: 5em;
+      color: purple;
+    }
+    #calc {
+      border: 1px solid purple;
+      margin-top: 1.5em;
+      line-height: 2.5em;
+      font-size: 1.25em;
+      padding: 10px 25px;
+    }
+    .main {
+      background-color: LavenderBlush;
+      padding: 1em 0 2em;
+    }
+  </style>
+ </head>
+ <body>
+   <div class="main">
+     <form class="foodform">
+       <legend>Select Food Details</legend>
+
+       <label for="food">Food:
+         <select class="control" name="food" id="food">
+           <option value="Eba">Eba</option>
+           <option value="Rice">Rice</option>
+           <option value="Bread">Bread</option>
+         </select>
+       </label>
+       <label for="serving">Serving:
+         <select class="control" name="serving" id="serving">
+           <option value="Plate">Plate</option>
+           <option value="Loaf">Loaf</option>
+           <option value="Slice">Slice</option>
+           <option value="Wrap">Wrap</option>
+         </select>
+       </label>
+       <label for="calc">
+         <button type="button" name="calc" id="calc">Calculate</button>
+       </label>
+     </form>
+   </div>
+   <div class="result">
+     <span id="ans">0</span>&nbsp;Calories
+   </div>
+   <script type="text/javascript">
+   (function(){//iife
+     function ready() {
+      var gramMap = {
+        "Eba": {"Wrap":100,"Plate":250},
+        "Rice": {"Plate":150},
+        "Bread": {"Slice":15,"Loaf":350}
+      };
+      var calorieDensity = {"Eba":50,"Rice":35,"Bread":75};
+      var calcFunc = function() {
+        var f = document.getElementById('food').value;
+        var s = document.getElementById('serving').value;
+        var a = document.getElementById('ans');
+        var cal = gramMap[f][s] * calorieDensity[f];
+        if(cal) {
+          a.innerHTML = cal;
+        } else {
+          alert("You can't have a "+s+" of "+f);
+          a.innerHTML = 0;
+        }
+      };
+      var btn = document.getElementById('calc');
+      btn.onclick=calcFunc;
+      //btn.addEventListener("click", calcFunc);
+    }
+    window.addEventListener("load", ready, false);
+   })();
+   </script>
+ </body>
+</html>
