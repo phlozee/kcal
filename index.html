@@ -88,22 +88,21 @@
         var s = document.getElementById('serving').value;
         var a = document.getElementById('ans');
         var cal = gramMap[f][s] * calorieDensity[f];
+        var iFunc = function(){
+          v = cal*i*dt/t;
+          a.innerHTML=v;
+          a.style.color=calcColor(v);
+          if (i<n) {
+            i++;
+          } else {
+            clearInterval(myVar);
+          }
+        };
         if(cal) {
           var t=2000, dt=100, i=1, n = t/dt;
           a.innerHTML=0;
           a.style.color=calcColor(0);
-          var v, myVar = setInterval(function(){
-            v = cal*i*dt/t;
-            a.innerHTML=v;
-            a.style.color=calcColor(v);
-            if (i<n) {
-              i++;
-            } else {
-              clearInterval(myVar);
-            }
-          },dt);
-
-
+          var v, myVar = setInterval(iFunc,dt);
         } else {
           alert("You can't have a "+s+" of "+f);
           a.innerHTML = 0;
